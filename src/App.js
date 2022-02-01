@@ -1,20 +1,29 @@
 import "./App.css";
 import Movies from "./components/movies";
-import { Route, Routes, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Rentals from "./components/rentals";
 import Customers from "./components/customers";
 import NotFound from "./components/notFound";
+import NavBar from "./components/navbar";
+import React from "react";
+import MovieForm from "./components/movieForm";
 
 function App() {
   return (
-    <main className="container">
-      <Routes>
-        <Route path="/movies" element={<Movies />}></Route>
-        <Route path="/customers" element={<Customers />}></Route>
-        <Route path="/rentals" element={<Rentals />}></Route>
-        <Route path="/not-found" element={<NotFound />}></Route>
-      </Routes>
-    </main>
+    <React.Fragment>
+      <NavBar />
+      <main className="container">
+        <Switch>
+          <Route path="/movies/:id" component={MovieForm} />
+          <Route path="/movies" component={Movies}></Route>
+          <Route path="/customers" component={Customers}></Route>
+          <Route path="/rentals" component={Rentals}></Route>
+          <Route path="/not-found" component={NotFound}></Route>
+          <Redirect from="/" exact to="/movies" />
+          <Redirect to="not-found" />
+        </Switch>
+      </main>
+    </React.Fragment>
   );
 }
 
